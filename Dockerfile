@@ -21,6 +21,5 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod headers rewrite
 RUN service apache2 restart
 
-# Ports
 EXPOSE 80
 CMD ["apachectl", "-D", "FOREGROUND"]
