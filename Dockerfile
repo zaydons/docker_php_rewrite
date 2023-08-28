@@ -1,4 +1,4 @@
-FROM php:8.1-rc-apache
+FROM php:8.3-rc-apache
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
