@@ -5,6 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron: 0 0 * * 1
   workflow_dispatch:
 
 env:
@@ -12,9 +14,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
