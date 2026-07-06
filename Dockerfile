@@ -1,25 +1,22 @@
-FROM php:8.3-rc-apache
+FROM php:8.3-apache
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
-        libmcrypt-dev \
         libpng-dev \
         zlib1g-dev \
         libxml2-dev \
         libzip-dev \
         libonig-dev \
         graphviz \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" gd pdo_mysql mysqli zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-    && docker-php-ext-configure gd \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install mysqli \
-    && docker-php-ext-install zip \
-    && docker-php-source delete
-
-RUN a2enmod headers rewrite
-RUN service apache2 restart
+RUN a2enmod headers rewrite \
+    && printf '<Directory /var/www/html>\n    AllowOverride All\n</Directory>\n' \
+        > /etc/apache2/conf-available/allow-override.conf \
+    && a2enconf allow-override
 
 EXPOSE 80
-CMD ["apachectl", "-D", "FOREGROUND"]
