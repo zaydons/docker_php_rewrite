@@ -7,9 +7,11 @@ PHP + Apache Docker image with `mod_rewrite` enabled and common extensions prein
 - Base: `php:8.3-apache`
 - Apache modules: `mod_rewrite`, `mod_headers`
 - `AllowOverride All` on `/var/www/html` — `.htaccess` files work out of the box
-- PHP extensions: `gd` (with freetype + jpeg), `pdo_mysql`, `mysqli`, `zip`
+- PHP extensions: `gd` (with freetype + jpeg), `pdo_mysql`, `mysqli`, `zip`, `opcache` (tuned)
+- Uses `php.ini-production` as the base config
 - System packages: `graphviz`
 - Multi-arch: `linux/amd64`, `linux/arm64`
+- Base image pinned by digest for reproducible builds
 
 ## Usage
 
