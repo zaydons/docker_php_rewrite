@@ -2,6 +2,7 @@
 .gitignore
 .github
 .dockerignore
+.hadolint.yaml
 README.md
 LICENSE
 *.md

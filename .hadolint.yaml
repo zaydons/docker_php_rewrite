@@ -1,0 +1,3 @@
+ignored:
+  - DL3008  # Pin apt versions — impractical for images tracking upstream Debian
+  - DL3059  # Multiple consecutive RUNs — split intentionally for readability
