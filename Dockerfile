@@ -6,6 +6,7 @@ LABEL org.opencontainers.image.source="https://github.com/zaydons/docker_php_rew
       org.opencontainers.image.licenses="MIT"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        curl \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
@@ -25,6 +26,12 @@ COPY opcache.ini $PHP_INI_DIR/conf.d/zz-opcache.ini
 RUN a2enmod headers rewrite \
     && printf '<Directory /var/www/html>\n    AllowOverride All\n</Directory>\n' \
         > /etc/apache2/conf-available/allow-override.conf \
-    && a2enconf allow-override
+    && a2enconf allow-override \
+    && printf 'ServerTokens Prod\nServerSignature Off\n' \
+        > /etc/apache2/conf-available/security-hardening.conf \
+    && a2enconf security-hardening
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -sS -o /dev/null http://127.0.0.1/ || exit 1
 
 EXPOSE 80

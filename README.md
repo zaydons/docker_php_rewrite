@@ -12,6 +12,8 @@ PHP + Apache Docker image with `mod_rewrite` enabled and common extensions prein
 - System packages: `graphviz`
 - Multi-arch: `linux/amd64`, `linux/arm64`
 - Base image pinned by digest for reproducible builds
+- `HEALTHCHECK` on port 80 so orchestrators know when Apache is serving
+- `ServerTokens Prod` + `ServerSignature Off` — Apache version hidden from responses
 
 ## Usage
 
