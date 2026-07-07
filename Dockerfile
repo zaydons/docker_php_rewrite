@@ -5,8 +5,6 @@ LABEL org.opencontainers.image.source="https://github.com/zaydons/docker_php_rew
       org.opencontainers.image.description="PHP + Apache image with mod_rewrite and common extensions" \
       org.opencontainers.image.licenses="MIT"
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends curl graphviz; \
