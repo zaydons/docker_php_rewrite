@@ -10,7 +10,7 @@ PHP + Apache Docker image with `mod_rewrite` enabled and common extensions prein
 - PHP extensions: `gd` (with freetype + jpeg), `pdo_mysql`, `mysqli`, `zip`, `opcache` (tuned)
 - Uses `php.ini-production` as the base config
 - System packages: `graphviz`
-- Multi-arch: `linux/amd64`, `linux/arm64`
+- `linux/amd64` only (arm64 builds via QEMU took ~15 min, dropped for CI speed)
 - Base image pinned by digest for reproducible builds
 - `HEALTHCHECK` on port 80 so orchestrators know when Apache is serving
 - `ServerTokens Prod` + `ServerSignature Off` — Apache version hidden from responses
