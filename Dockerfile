@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM php:8.3-apache@sha256:d180f417e5e45389d18597150a947d1ce89cad2a60be6c25f54ffcfd40ee05f5
+FROM php:8.5-apache@sha256:ede24dfd13fe79fb8ea0d0bac0ac45827a9a540d2a16e45c047f9afaf69c3eaf
 
 LABEL org.opencontainers.image.source="https://github.com/zaydons/docker_php_rewrite" \
       org.opencontainers.image.description="PHP + Apache image with mod_rewrite and common extensions" \
