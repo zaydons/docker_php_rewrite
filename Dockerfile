@@ -26,6 +26,7 @@ RUN set -eux; \
         | sort -u \
         | xargs -r dpkg-query --search \
         | cut -d: -f1 \
+        | grep -v ' ' \
         | sort -u \
         | xargs -r apt-mark manual; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
