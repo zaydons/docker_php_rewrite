@@ -29,6 +29,7 @@ RUN set -eux; \
         | grep -v ' ' \
         | sort -u \
         | xargs -r apt-mark manual; \
+    apt-mark auto libc6-dev linux-libc-dev 2>/dev/null || true; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
