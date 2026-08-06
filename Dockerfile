@@ -18,7 +18,7 @@ RUN set -eux; \
         libzip-dev \
         libonig-dev; \
     docker-php-ext-configure gd --with-freetype --with-jpeg; \
-    docker-php-ext-install -j"$(nproc)" gd pdo_mysql mysqli zip opcache; \
+    docker-php-ext-install -j"$(nproc)" gd pdo_mysql mysqli zip; \
     apt-mark auto '.*' > /dev/null; \
     [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
     find /usr/local -type f -executable -exec ldd '{}' ';' \
@@ -34,6 +34,7 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*
 
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+# opcache is built into PHP core as of 8.5, so it no longer needs docker-php-ext-install/-enable
 COPY opcache.ini $PHP_INI_DIR/conf.d/zz-opcache.ini
 
 RUN a2enmod headers rewrite \
