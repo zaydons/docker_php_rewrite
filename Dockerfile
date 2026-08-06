@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM php:8.3-apache@sha256:973e11c67c1c81e7811077a0efa0f910cf903af0ba972cab6ba0c0e15913c771
+FROM php:8.5-apache@sha256:ede24dfd13fe79fb8ea0d0bac0ac45827a9a540d2a16e45c047f9afaf69c3eaf
 
 LABEL org.opencontainers.image.source="https://github.com/zaydons/docker_php_rewrite" \
       org.opencontainers.image.description="PHP + Apache image with mod_rewrite and common extensions" \
@@ -18,7 +18,7 @@ RUN set -eux; \
         libzip-dev \
         libonig-dev; \
     docker-php-ext-configure gd --with-freetype --with-jpeg; \
-    docker-php-ext-install -j"$(nproc)" gd pdo_mysql mysqli zip opcache; \
+    docker-php-ext-install -j"$(nproc)" gd pdo_mysql mysqli zip; \
     apt-mark auto '.*' > /dev/null; \
     [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
     find /usr/local -type f -executable -exec ldd '{}' ';' \
@@ -34,6 +34,7 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*
 
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+# opcache is built into PHP core as of 8.5, so it no longer needs docker-php-ext-install/-enable
 COPY opcache.ini $PHP_INI_DIR/conf.d/zz-opcache.ini
 
 RUN a2enmod headers rewrite \
