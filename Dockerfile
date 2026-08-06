@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.source="https://github.com/zaydons/docker_php_rew
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends curl graphviz; \
-    savedAptMark="$(apt-mark showmanual | grep -vE '^(libc6-dev|linux-libc-dev)$')"; \
+    savedAptMark="$(apt-mark showmanual | grep -vE '^(libc6-dev|linux-libc-dev|autoconf|dpkg-dev|file|g\+\+|gcc|make|re2c|pkg-config)$')"; \
     apt-get install -y --no-install-recommends \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
