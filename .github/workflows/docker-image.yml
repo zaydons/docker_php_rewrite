@@ -90,7 +90,11 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}
+          # Scan the stable "latest" tag here (not the per-build digest): Trivy
+          # embeds the image reference into each SARIF finding's location, and
+          # GitHub's code-scanning dedup matches alerts by that location. A
+          # digest that changes every run makes every scan's findings look new.
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           format: sarif
           output: trivy-results.sarif
           severity: HIGH,CRITICAL
